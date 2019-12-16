@@ -1,6 +1,10 @@
 const keyValueStoreModel = require('../models/keyValueStoreModel');
 const responseHelper = require('../helpers/responseHelper');
 
+//handler when no key is passed in url
+module.exports.noKey = async (req, res, next) => {
+    res.send("Please insert pass get in url to get its value!")
+}
 //handler for the get key value request along with timestamp
 module.exports.getKeyValue = async (req, res, next) => {
     if (req.query.timestamp) {
