@@ -14,6 +14,12 @@ module.exports.getKeyValue = async (req, res, next) => {
 //handler for the post key value request
 module.exports.postKeyValue = async (req, res, next) => {
     var objectKey = Object.keys(req.body)[0];
+    if (objectKey == "" || objectKey == null) {
+        return res.send("key cannot be empty or null!");
+    }
+    if (req.body[objectKey] == "" || req.body[objectKey] == null) {
+        return res.send("value cannot be empty or null!");
+    }
     var checkExisting = await keyValueStoreModel.findOne({ key: objectKey });
     if (checkExisting) {
         updateKeyValue(objectKey, req, res);
@@ -24,9 +30,9 @@ module.exports.postKeyValue = async (req, res, next) => {
 
 }
 
-/*
+/**
 * @description       gets the latest value of the requested key from key_values collection in db
-* @params req,res    request and response object for the api
+* @params req res    request and response object for the api
 * @return            JSON object with key, value and timestamp
 */
 function getLatestKeyValue(req, res) {
@@ -46,9 +52,9 @@ function getLatestKeyValue(req, res) {
         }).catch(err => responseHelper.someThingWentWrongResponse(res, err));
 }
 
-/*
+/**
 * @description       gets the value of the requested key from key_values collection in db using timestamp
-* @param req,res     request and response object for the api
+* @params req,res     request and response object for the api
 * @return            JSON object with value of the requested key for specific timestamp
 */
 function getValueWithTimestamp(req, res) {
@@ -69,9 +75,9 @@ function getValueWithTimestamp(req, res) {
 
 }
 
-/*
+/**
 * @description       updates the value of a given key in mongodb in key_values collection
-* @param objectKey   key to be updated in db
+* @params objectKey   key to be updated in db
 * @return            JSON object with key, value and timestamp
 */
 function updateKeyValue(objectKey, req, res) {
@@ -102,9 +108,9 @@ function updateKeyValue(objectKey, req, res) {
     });
 }
 
-/*
+/**
 * @description       creates a new key value pair in mongodb in key_values collection
-* @param objectKey   key to be created in db
+* @params objectKey   key to be created in db
 * @return            JSON object with key, value and timestamp
 */
 function createKeyValue(objectKey, req, res) {
