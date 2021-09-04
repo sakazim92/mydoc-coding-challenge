@@ -1,5 +1,7 @@
 # The Shortest URL
 
+https://www.youtube.com/watch?v=LXb3EKWsInQ
+
 This project implements the shortest url service using node with express.
 
 ### Brief
